@@ -25,7 +25,16 @@ export default function ShipmentTable({ shipments, onViewDetails }) {
 >
       <Table stickyHeader sx={{ minWidth: 650 }}>
         {/* Table Header */}
-        <TableHead sx={{ backgroundColor: "#f5f5f5" }}>
+       <TableHead
+  sx={{
+    backgroundColor: "#f5f5f5",
+    boxShadow: "0px 2px 6px rgba(0,0,0,0.15)", // 👈 subtle shadow
+    position: "sticky",
+    top: 0,
+    zIndex: 2,
+  }}
+>
+
           <TableRow hover sx={{ "&:hover": { backgroundColor: "#f9f9f9" } }}>
 
             <TableCell sx={{ fontWeight: 600, fontSize: 14, textAlign: "center" }}>
@@ -40,32 +49,44 @@ export default function ShipmentTable({ shipments, onViewDetails }) {
         </TableHead>
 
         {/* Table Body */}
-        <TableBody>
-          {shipments.map((shipment, index) => (
-            <TableRow key={shipment.id} hover>
-              <TableCell sx={{ fontSize: 13, textAlign: "center" }}>{index + 1}</TableCell>
-              <TableCell sx={{ fontSize: 13 }}>{shipment.id}</TableCell>
-              <TableCell sx={{ fontSize: 13 }}>{shipment.customerName}</TableCell>
-              <TableCell sx={{ fontSize: 13 }}>
-                {shipment.pickup} → {shipment.destination}
-              </TableCell>
-              <TableCell sx={{ textAlign: "center" }}>
-                <StatusBadge status={shipment.status} />
-              </TableCell>
-              <TableCell sx={{ textAlign: "center" }}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  size="small"
-                  startIcon={<VisibilityIcon />}
-                  onClick={() => onViewDetails(shipment)}
-                >
-                  View
-                </Button>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
+        {/* Show "No Data" message if shipments list is empty */}
+{shipments.length === 0 ? (
+  <TableBody>
+    <TableRow>
+      <TableCell colSpan={6} align="center" sx={{ py: 3, fontWeight: 600 }}>
+        Data not Found
+      </TableCell>
+    </TableRow>
+  </TableBody>
+) : (
+  <TableBody>
+    {shipments.map((shipment, index) => (
+      <TableRow key={shipment.id} hover>
+        <TableCell sx={{ fontSize: 13, textAlign: "center" }}>{index + 1}</TableCell>
+        <TableCell sx={{ fontSize: 13 }}>{shipment.id}</TableCell>
+        <TableCell sx={{ fontSize: 13 }}>{shipment.customerName}</TableCell>
+        <TableCell sx={{ fontSize: 13 }}>
+          {shipment.pickup} → {shipment.destination}
+        </TableCell>
+        <TableCell sx={{ textAlign: "center" }}>
+          <StatusBadge status={shipment.status} />
+        </TableCell>
+        <TableCell sx={{ textAlign: "center" }}>
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            startIcon={<VisibilityIcon />}
+            onClick={() => onViewDetails(shipment)}
+          >
+            View
+          </Button>
+        </TableCell>
+      </TableRow>
+    ))}
+  </TableBody>
+)}
+
       </Table>
     </TableContainer>
   );
