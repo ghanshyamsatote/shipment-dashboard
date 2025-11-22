@@ -11,7 +11,7 @@ import FilterBar from "../components/FilterBar";
 import useShipment from "../Hook/useShipment";
 import useFiltered from "../Hook/useFiltered";
 
-export default function ShipmentListPage() {
+export default function ShipmentList() {
   const [selectedShipment, setSelectedShipment] = useState(null);
 
   const { shipments, updateStatus } = useShipment();
