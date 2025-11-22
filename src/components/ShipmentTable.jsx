@@ -33,7 +33,7 @@ export default function ShipmentTable({ shipments, onViewDetails }) {
             </TableCell>
             <TableCell sx={{ fontWeight: 600, fontSize: 14 }}>Shipment ID</TableCell>
             <TableCell sx={{ fontWeight: 600, fontSize: 14 }}>Customer Name</TableCell>
-            <TableCell sx={{ fontWeight: 600, fontSize: 14 }}>Route</TableCell>
+            <TableCell sx={{ fontWeight: 600, fontSize: 14 }}>Pickup Location → Destination</TableCell>
             <TableCell sx={{ fontWeight: 600, fontSize: 14, textAlign: "center" }}>Status</TableCell>
             <TableCell sx={{ fontWeight: 600, fontSize: 14, textAlign: "center" }}>Action</TableCell>
           </TableRow>
