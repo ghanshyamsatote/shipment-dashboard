@@ -73,9 +73,10 @@ useEffect(() => {
 
   {/* Top: Shipment title */}
    <Box mb={3}>
-        <Typography variant="h5" fontWeight={700}>
-          Shipment #{shipment.id}
-        </Typography>
+     <Typography variant="h5" fontWeight={700}>
+  Shipment ID - <span style={{ color: "#1976d2" }}>{shipment.id}</span>
+</Typography>
+
       </Box>
 
   {/* Editable Fields */}

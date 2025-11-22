@@ -3,7 +3,7 @@ import { Box, Typography, Card } from "@mui/material";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
-
+import FilterStatus from "../components/FilterStatus";
 import ShipmentTable from "../components/ShipmentTable";
 import ShipmentDetailModel from "../components/ShipmentDetailModel";
 import FilterBar from "../components/FilterBar";
@@ -15,7 +15,8 @@ export default function ShipmentListPage() {
   const [selectedShipment, setSelectedShipment] = useState(null);
 
   const { shipments, updateStatus } = useShipment();
-  const { searchQuery, setSearchQuery, filteredData } = useFiltered(shipments);
+  const { searchQuery, setSearchQuery,statusFilter,
+  setStatusFilter, filteredData } = useFiltered(shipments);
 
   const handleViewDetails = (shipment) => {
     setSelectedShipment(shipment);
@@ -50,6 +51,10 @@ export default function ShipmentListPage() {
         {/* FilterBar */}
         <Box sx={{ flex: { xs: "1 1 100%", md: "0 0 350px" } }}>
           <FilterBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+          
+        </Box>
+        <Box>
+            <FilterStatus   statusFilter={statusFilter} setStatusFilter={setStatusFilter}/>
         </Box>
 
         {/* Stats Cards */}
