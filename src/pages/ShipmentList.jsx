@@ -38,7 +38,7 @@ export default function ShipmentList() {
 </Box>
 
 
-      {/* Filter + Stats */}
+    
       <Box
         sx={{
           display: "flex",
@@ -48,7 +48,7 @@ export default function ShipmentList() {
           alignItems: "flex-start",
         }}
       >
-        {/* FilterBar */}
+
         <Box sx={{ flex: { xs: "1 1 100%", md: "0 0 350px" } }}>
           <FilterBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
           
@@ -119,14 +119,12 @@ export default function ShipmentList() {
         </Box>
       </Box>
 
-      {/* Shipment Table */}
 <Box sx={{ border: "1px solid #ddd", borderRadius: 1 }}>
   <ShipmentTable shipments={filteredData} onViewDetails={handleViewDetails} />
 </Box>
 
 
 
-      {/* Shipment Detail Modal */}
       <ShipmentDetailModel
         shipment={selectedShipment}
         onClose={handleCloseModal}

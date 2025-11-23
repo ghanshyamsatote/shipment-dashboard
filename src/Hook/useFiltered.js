@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 
 export default function useFiltered(data, initialSearch = "") {
   const [searchQuery, setSearchQuery] = useState(initialSearch);
-  const [statusFilter, setStatusFilter] = useState("All"); // NEW
+  const [statusFilter, setStatusFilter] = useState("All"); 
 
   const filteredData = useMemo(() => {
     return data.filter((item) => {

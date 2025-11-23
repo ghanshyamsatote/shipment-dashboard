@@ -132,36 +132,44 @@ export default function ShipmentTable({ shipments, onViewDetails }) {
                       {shipment.pickup} → {shipment.destination}
                     </TableCell>
                     <TableCell
+  align="center"
   sx={{
-    fontSize: { xs: 12, sm: 13, md: 14 },
+    fontSize: { xs: 11, sm: 13, md: 14 },
+    maxWidth: { xs: 75, sm: 130 },
     wordBreak: "break-word",
-    maxWidth: { xs: 120, sm: 200 },
+    px: 1,
   }}
 >
-                      <StatusBadge status={shipment.status} />
-                    </TableCell>
-                    <TableCell
+  <StatusBadge status={shipment.status} />
+</TableCell>
+
+<TableCell
+  align="center"
   sx={{
-    fontSize: { xs: 12, sm: 13, md: 14 },
-    wordBreak: "break-word",
-    maxWidth: { xs: 120, sm: 200 },
+    px: 1,
   }}
 >
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        size="small"
-                        startIcon={<VisibilityIcon />}
-                        sx={{ minWidth: 80 }}
-                        onClick={() => onViewDetails(shipment)}
-                      >
-                        View
-                      </Button>
-                    </TableCell>
+  <Button
+    variant="contained"
+    color="primary"
+    size="small"
+    startIcon={<VisibilityIcon />}
+    sx={{
+      minWidth: { xs: 65, sm: 90 },
+      fontSize: { xs: 10, sm: 12, md: 13 },
+      textTransform: "none",
+      px: { xs: 1, sm: 2 },
+    }}
+    onClick={() => onViewDetails(shipment)}
+  >
+    {window.innerWidth < 480 ? "View" : "View Detail"}
+  </Button>
+</TableCell>
+
                   </TableRow>
                 ))}
 
-                {/* Empty rows to maintain table height */}
+               
              
               </>
             )}
