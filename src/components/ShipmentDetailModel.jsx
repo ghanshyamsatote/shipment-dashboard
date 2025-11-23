@@ -16,7 +16,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Fade from '@mui/material/Fade';
 import { useState, useEffect } from "react";
 const Transition = forwardRef(function Transition(props, ref) {
-  return <Fade ref={ref} {...props} timeout={{ enter: 500, exit: 500 }} />;
+  return <Fade ref={ref} {...props} timeout={{ enter: 300, exit: 500 }} />;
 });
 export default function ShipmentDetailModal({
   shipment,
@@ -61,16 +61,25 @@ useEffect(() => {
   {/* Close Button */}
   <IconButton
     onClick={onClose}
+    aria-label='close modal'
     sx={{
       position: "absolute",
       top: 8,
       right: 8,
       color: "text.secondary",
+       "&:hover": { bgcolor: "rgba(0,0,0,0.04)" }
     }}
   >
     <CloseIcon />
   </IconButton>
-
+ <DialogContent
+    dividers
+    sx={{
+      overflowY: "auto",
+      py: 2,
+      px: { xs: 1, sm: 2 },
+    }}
+  >
   {/* Top: Shipment title */}
    <Box mb={3}>
      <Typography variant="h5" fontWeight={700}>
@@ -101,8 +110,8 @@ useEffect(() => {
       </Box>
 
       {/* Shipment Info */}
-      <Box sx={{ mb: 3, p: 2, bgcolor: "#f9f9f9", borderRadius: 2 }}>
-        <Typography variant="subtitle2" fontWeight={600} sx={{ mb: 1 }}>
+      <Box sx={{ mb: 3, p: { xs: 1, sm: 2 }, bgcolor: "#f9f9f9", borderRadius: 2 }}>
+        <Typography variant="subtitle2" fontWeight={600} sx={{ mb: 2 }}>
           Shipment Info
         </Typography>
         <Grid container spacing={5}>
@@ -126,6 +135,9 @@ useEffect(() => {
               fullWidth
               sx={{ borderRadius: 2 }}
               onChange={(e) => setLocalStatus(e.target.value)}
+                MenuProps={{
+    PaperProps: { sx: { maxHeight: 200 } }
+  }}
             >
               <MenuItem value="Pending">Pending</MenuItem>
               <MenuItem value="In Transit">In Transit</MenuItem>
@@ -134,25 +146,26 @@ useEffect(() => {
           </Grid>
         </Grid>
       </Box>
-
+</DialogContent>
   {/* Actions */}
-  <Box display="flex" justifyContent="flex-end" gap={2} mt={4}>
-    <Button
-      onClick={onClose}
-      variant="outlined"
-      sx={{ borderRadius: 2, textTransform: "none" }}
-    >
-      Cancel
-    </Button>
-    <Button
-      onClick={handleUpdate}
-      variant="contained"
-      color="primary"
-      sx={{ borderRadius: 2, px: 4, textTransform: "none" }}
-    >
-      Update
-    </Button>
-  </Box>
+<DialogActions sx={{ px: 3, pb: 2 }}>
+  <Button
+    onClick={onClose}
+    variant="outlined"
+    sx={{ borderRadius: 2, textTransform: "none" }}
+  >
+    Cancel
+  </Button>
+  <Button
+    onClick={handleUpdate}
+    variant="contained"
+    color="primary"
+    sx={{ borderRadius: 2, px: 4, textTransform: "none" }}
+  >
+    Update
+  </Button>
+</DialogActions>
+
 </Dialog>
 
 

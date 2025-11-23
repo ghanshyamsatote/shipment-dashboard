@@ -7,87 +7,182 @@ import {
   TableRow,
   Paper,
   Button,
+  TablePagination
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import StatusBadge from "./StatusBadge";
-
+import { useState } from "react";
 export default function ShipmentTable({ shipments, onViewDetails }) {
+   const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(
+  window.innerWidth < 768 ? 5 : 10
+);
+  
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+    const paginatedShipments = shipments.slice(
+    page * rowsPerPage,
+    page * rowsPerPage + rowsPerPage
+  );
+  
+
   return (
-<TableContainer
-  component={Paper}
+    <>
+  <Paper sx={{ width: "100%", overflow: "hidden", borderRadius: 2 }}>
+      {/* Table container with fixed height */}
+    <TableContainer
   sx={{
-    maxHeight: { xs: "50vh", sm: "60vh", md: "65vh" },
-         // vertical scroll
-    overflow: "auto",        // vertical + horizontal scroll
-    borderRadius: 2,
-    fontFamily: "Roboto, Helvetica, Arial, sans-serif",
-  }}
->
-      <Table stickyHeader sx={{ minWidth: 650 }}>
-        {/* Table Header */}
-       <TableHead
-  sx={{
-    backgroundColor: "#f5f5f5",
-    boxShadow: "0px 2px 6px rgba(0,0,0,0.15)", // 👈 subtle shadow
-    position: "sticky",
-    top: 0,
-    zIndex: 2,
+    maxHeight: '60vh', // 60% of the viewport height
+    height:'auto',
+    overflowX: "auto",
+    width: "100%",
   }}
 >
 
-          <TableRow hover sx={{ "&:hover": { backgroundColor: "#f9f9f9" } }}>
 
-            <TableCell sx={{ fontWeight: 600, fontSize: 14, textAlign: "center" }}>
-              Sr. No.
-            </TableCell>
-            <TableCell sx={{ fontWeight: 600, fontSize: 14 }}>Shipment ID</TableCell>
-            <TableCell sx={{ fontWeight: 600, fontSize: 14 }}>Customer Name</TableCell>
-            <TableCell sx={{ fontWeight: 600, fontSize: 14 }}>Pickup Location → Destination</TableCell>
-            <TableCell sx={{ fontWeight: 600, fontSize: 14, textAlign: "center" }}>Status</TableCell>
-            <TableCell sx={{ fontWeight: 600, fontSize: 14, textAlign: "center" }}>Action</TableCell>
-          </TableRow>
-        </TableHead>
-
-        {/* Table Body */}
-        {/* Show "No Data" message if shipments list is empty */}
-{shipments.length === 0 ? (
-  <TableBody>
-    <TableRow>
-      <TableCell colSpan={6} align="center" sx={{ py: 3, fontWeight: 600 }}>
-        Data not Found
-      </TableCell>
-    </TableRow>
-  </TableBody>
-) : (
-  <TableBody>
-    {shipments.map((shipment, index) => (
-      <TableRow key={shipment.id} hover>
-        <TableCell sx={{ fontSize: 13, textAlign: "center" }}>{index + 1}</TableCell>
-        <TableCell sx={{ fontSize: 13 }}>{shipment.id}</TableCell>
-        <TableCell sx={{ fontSize: 13 }}>{shipment.customerName}</TableCell>
-        <TableCell sx={{ fontSize: 13 }}>
-          {shipment.pickup} → {shipment.destination}
-        </TableCell>
-        <TableCell sx={{ textAlign: "center" }}>
-          <StatusBadge status={shipment.status} />
-        </TableCell>
-        <TableCell sx={{ textAlign: "center" }}>
-          <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            startIcon={<VisibilityIcon />}
-            onClick={() => onViewDetails(shipment)}
+        <Table stickyHeader sx={{ minWidth: 650 }}>
+          {/* Table Head */}
+          <TableHead
+            sx={{
+              backgroundColor: "#f5f5f5",
+              boxShadow: "0px 2px 6px rgba(0,0,0,0.15)",
+              position: "sticky",
+              top: 0,
+              zIndex: 2,
+            }}
           >
-            View
-          </Button>
-        </TableCell>
-      </TableRow>
-    ))}
-  </TableBody>
-)}
+            <TableRow
+              sx={{
+                "&:hover": { backgroundColor: "#f9f9f9" },
+                fontSize: 14,
+              }}
+            >
+              <TableCell sx={{ fontWeight: 600, textAlign: "center" }}>
+                Sr. No.
+              </TableCell>
+              <TableCell sx={{ fontWeight: 600 }}>Shipment ID</TableCell>
+              <TableCell sx={{ fontWeight: 600 }}>Customer Name</TableCell>
+              <TableCell sx={{ fontWeight: 600 }}>
+                Pickup Location → Destination
+              </TableCell>
+              <TableCell sx={{ fontWeight: 600, textAlign: "center" }}>
+                Status
+              </TableCell>
+              <TableCell sx={{ fontWeight: 600, textAlign: "center" }}>
+                Action
+              </TableCell>
+            </TableRow>
+          </TableHead>
 
-      </Table>
-    </TableContainer>
+          {/* Table Body */}
+          <TableBody>
+            {paginatedShipments.length === 0 ? (
+              <TableRow>
+                <TableCell
+                  colSpan={6}
+                  align="center"
+                  sx={{ py: 5, fontStyle: "italic", color: "#999" }}
+                >
+                  No shipments found
+                </TableCell>
+              </TableRow>
+            ) : (
+              <>
+                {paginatedShipments.map((shipment, index) => (
+                  <TableRow
+                    key={shipment.id}
+                    hover
+                    sx={{
+                      "&:nth-of-type(odd)": { backgroundColor: "#fafafa" },
+                    }}
+                  >
+                    <TableCell sx={{ textAlign: "center", fontSize: 14 }}>
+                      {page * rowsPerPage + index + 1}
+                    </TableCell>
+                    <TableCell
+  sx={{
+    fontSize: { xs: 12, sm: 13, md: 14 },
+    wordBreak: "break-word",
+    maxWidth: { xs: 120, sm: 200 },
+  }}
+>{shipment.id}</TableCell>
+                    <TableCell
+  sx={{
+    fontSize: { xs: 12, sm: 13, md: 14 },
+    wordBreak: "break-word",
+    maxWidth: { xs: 120, sm: 200 },
+  }}
+>
+                      {shipment.customerName}
+                    </TableCell>
+                    <TableCell
+  sx={{
+    fontSize: { xs: 12, sm: 13, md: 14 },
+    wordBreak: "break-word",
+    maxWidth: { xs: 120, sm: 200 },
+  }}
+>
+                      {shipment.pickup} → {shipment.destination}
+                    </TableCell>
+                    <TableCell
+  sx={{
+    fontSize: { xs: 12, sm: 13, md: 14 },
+    wordBreak: "break-word",
+    maxWidth: { xs: 120, sm: 200 },
+  }}
+>
+                      <StatusBadge status={shipment.status} />
+                    </TableCell>
+                    <TableCell
+  sx={{
+    fontSize: { xs: 12, sm: 13, md: 14 },
+    wordBreak: "break-word",
+    maxWidth: { xs: 120, sm: 200 },
+  }}
+>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        size="small"
+                        startIcon={<VisibilityIcon />}
+                        sx={{ minWidth: 80 }}
+                        onClick={() => onViewDetails(shipment)}
+                      >
+                        View
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+
+                {/* Empty rows to maintain table height */}
+             
+              </>
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      {/* Pagination */}
+      <TablePagination
+        component="div"
+        count={shipments.length}
+        page={page}
+        onPageChange={handleChangePage}
+        rowsPerPage={rowsPerPage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+        rowsPerPageOptions={[5, 10, 25, 50]}
+        sx={{
+          "& .MuiTablePagination-toolbar": { minHeight: 50 },
+        }}
+      />
+    </Paper>
+</>
   );
 }

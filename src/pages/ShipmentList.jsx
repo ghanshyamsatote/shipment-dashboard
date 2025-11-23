@@ -53,12 +53,12 @@ export default function ShipmentList() {
           <FilterBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
           
         </Box>
-        <Box>
+        <Box sx={{gap: { xs: 3, md: 2 }}}>
             <FilterStatus   statusFilter={statusFilter} setStatusFilter={setStatusFilter}/>
         </Box>
 
         {/* Stats Cards */}
-        <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap", flex: 1 }}>
+        <Box sx={{ display: "flex", gap: { xs: 3, md: 2 }, flexWrap: "wrap", flex: 1 }}>
          <Card sx={{
   p: 2,
   flex: "0 1 120px",
@@ -74,8 +74,8 @@ export default function ShipmentList() {
 </Box>
 
             <Box>
-              <Typography variant="subtitle2" sx={{ fontSize: 12 }}>Total</Typography>
-              <Typography variant="h6" sx={{ fontSize: 14 }}>{shipments.length}</Typography>
+              <Typography variant="subtitle2" sx={{ fontSize: 14 }}>Total</Typography>
+              <Typography variant="h6" sx={{ fontSize: 14, fontWeight: 700 }}>{shipments.length}</Typography>
             </Box>
           </Card>
 
@@ -91,8 +91,8 @@ export default function ShipmentList() {
 
             <PendingActionsIcon color="warning" fontSize="small" />
             <Box>
-              <Typography variant="subtitle2" sx={{ fontSize: 12 }}>Pending</Typography>
-              <Typography variant="h6" sx={{ fontSize: 14 }}>
+              <Typography variant="h6" sx={{ fontSize: 14 }}>Pending</Typography>
+              <Typography variant="h6" sx={{ fontSize: 14, fontWeight: 700 }}>
                 {shipments.filter((s) => s.status === "Pending").length}
               </Typography>
             </Box>
@@ -110,8 +110,8 @@ export default function ShipmentList() {
 
             <DoneAllIcon color="success" fontSize="small" />
             <Box>
-              <Typography variant="subtitle2" sx={{ fontSize: 12 }}>Delivered</Typography>
-              <Typography variant="h6" sx={{ fontSize: 14 }}>
+              <Typography variant="h6" sx={{ fontSize: 14}}>Delivered</Typography>
+              <Typography variant="h6" sx={{ fontSize: 14, fontWeight: 700 }}>
                 {shipments.filter((s) => s.status === "Delivered").length}
               </Typography>
             </Box>
@@ -123,6 +123,7 @@ export default function ShipmentList() {
 <Box sx={{ border: "1px solid #ddd", borderRadius: 1 }}>
   <ShipmentTable shipments={filteredData} onViewDetails={handleViewDetails} />
 </Box>
+
 
 
       {/* Shipment Detail Modal */}
